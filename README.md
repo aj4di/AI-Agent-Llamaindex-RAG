@@ -75,11 +75,11 @@ caregraph/
 - This is a demo; do not use for clinical decisions.
 
 
-## 📌 Project Description (for Portfolio)
+##Project Description 
 
-**CareGraph** is a demonstration of how to combine multi-agent orchestration, Retrieval-Augmented Generation (RAG), and explainability into a single cohesive pipeline:
+**CareGraph** is a demo of prototype how to combine multi-agent orchestration, Retrieval-Augmented Generation (RAG)
 
-- **Multi-Agent System** — Specialized agents (Eligibility, PriorAuth, Provider, Summarizer) coordinate using role-specific tools.
+- **Multi-Agent System** — Specialized agents (Eligibility-, PriorAuth-, Provider-, Summarizer - agent) coordinate flow using role-specific tools.
 - **RAG over Structured & Unstructured Data** — Combines ICD-10/CPT tables, synthetic FHIR coverage JSON, and Markdown/PDF plan rules.
 - **Explainability via Why Card** — Every answer is backed by a JSON card listing decisions, criteria, and source snippets.
 - **Local & Cloud LLMs** — Works with llama.cpp GGUF models (local) or OpenAI APIs (fallback).
@@ -88,40 +88,10 @@ caregraph/
 
 This project is safe for public demonstration because it uses **synthetic data only**.
 
-### Why it’s portfolio-worthy
-- Showcases **production-readiness** (Docker, CI/CD, metrics, dashboard).
-- Demonstrates **responsible AI design** with explainability and compliance mindset (HIPAA-like PHI scoping).
-- Easy to run locally or deploy via Docker/GitHub Actions.
 
----
+Additional feature: 
+## Fine‑tune a tiny model (QLoRA)
 
-
-## Run from GHCR image (no clone)
-Once your image is published by the workflow:
-```bash
-docker run --rm -p 8501:8501 -p 9000:9000 \
-  -e LLAMA_CPP_MODEL_PATH=/models/YOUR_MODEL.gguf \
-  -v $(pwd)/models:/models \
-  ghcr.io/<your-org-or-user>/caregraph:latest
-```
-Then open http://localhost:8501
-
-
-## 🔧 Fine‑tune a tiny model (QLoRA)
-Quickest path to a domain‑aware helper model.
-
-```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r docker/requirements.txt  # includes transformers/trl/peft/bitsandbytes
-
-# Train on the toy dataset
-python training/train_qlora.py
-
-# Try the adapter
-python training/infer_with_adapter.py
-```
 
 **Notes**
-- Change `BASE_MODEL` env var to switch bases (e.g., `meta-llama/Llama-3.2-3B-Instruct`).
-- Add your own JSONL data at `training/data/*.jsonl` (`instruction`, `input`, `output`).
-- Ship adapters only (PEFT), or merge later if you need a single file.
+- Change `BASE_MODEL` env var to switch model (e.g., `meta-llama/Llama-3.2-3B-Instruct`).
